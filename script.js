@@ -24,8 +24,8 @@ cards.forEach(card => {
             audio = new Audio("Dtmf"+card.dataset.num+".mp3");
             audio.play();
             if(selectedCards.length >= 2){
+                moves++;
                 setTimeout(function(){
-                    moves++;
                     moveCounter.innerHTML = "Moves: " + moves;
                     container.querySelectorAll(".selected").forEach(selectedCard => {
                         selectedCard.classList.remove("selected");
@@ -38,7 +38,7 @@ cards.forEach(card => {
                         matches++;
                         if(matches >= 10){
                             moveCounter.innerHTML = "You won in " + moves + " moves!";
-                            if(best && moves < best){
+                            if(!best || best && moves < best){
                                 best = moves;
                                 localStorage.setItem("dtmfhighscore", best);
                                 highScore.innerHTML = "Best: " + best;
