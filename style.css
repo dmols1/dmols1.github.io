@@ -19,7 +19,6 @@ body {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     height: 8vw;
-    min-height: 15vh;
     aspect-ratio: 2 / 3;
 }
 
@@ -42,6 +41,4 @@ body {
 #reset {
     font-size: 20px;
     margin-bottom: 20px;
-
 }
-
