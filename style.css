@@ -18,7 +18,7 @@ body {
     background-size: 90% 60%;
     background-repeat: no-repeat;
     background-position: 50% 50%;
-    height: 8vw;
+    height: 15vh;
     aspect-ratio: 2 / 3;
 }
 
@@ -33,8 +33,8 @@ body {
 #gameContainer div.matched {
     background-color: paleturquoise;
     background-image: none;
-    font-size: 3cqi;
-    line-height: 8vw;
+    font-size: 10vh;
+    line-height: 15vh;
     color: black;
 }
 
