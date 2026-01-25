@@ -20,7 +20,6 @@ body {
     background-position: 50% 50%;
     height: 8vw;
     min-height: 15vh;
-    max-height: 15vw;
     aspect-ratio: 2 / 3;
 }
 
@@ -45,3 +44,4 @@ body {
     margin-bottom: 20px;
 
 }
+
