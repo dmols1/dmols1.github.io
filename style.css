@@ -1,0 +1,45 @@
+body {
+    background-color: black;
+    color:white;
+    text-align: center;
+    place-items: center;
+}
+
+#gameContainer {
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: repeat(5, auto);
+    gap: 20px;
+}
+
+#gameContainer div {
+    background-color: palegoldenrod;
+    background-image: url(icon.png);
+    background-size: 90% 60%;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    height: 8vw;
+    min-height: 15vh;
+    aspect-ratio: 2 / 3;
+}
+
+#gameContainer div:hover {
+    background-color: palegreen;
+}
+
+#gameContainer div.selected {
+    background-color: green;
+}
+
+#gameContainer div.matched {
+    background-color: paleturquoise;
+    background-image: none;
+    font-size: 3cqi;
+    line-height: 8vw;
+    color: black;
+}
+
+#reset {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
