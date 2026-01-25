@@ -19,6 +19,7 @@ body {
     background-repeat: no-repeat;
     background-position: 50% 50%;
     height: 15vh;
+    max-width: 15vw;
     aspect-ratio: 2 / 3;
 }
 
