@@ -1,15 +1,16 @@
 const container = document.getElementById("gameContainer");
 const moveCounter = document.getElementById("moveCounter");
-const highScore = document.getElementById("highScore")
+const highScore = document.getElementById("highScore");
 let cardNums = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9];
 let moves = 0;
 let best = localStorage.getItem("dtmfhighscore") || null;
 let matches = 0;
 let selectedCards = [];
 let audio = new Audio();
+let timeout = null;
 for(let i = 0; i < 20; i++){
     container.innerHTML += "<div></div>";
-};
+}
 highScore.innerHTML = best ? "Best: " + best : "";
 let cards = container.querySelectorAll("div");
 cards.forEach(card => {
@@ -24,8 +25,8 @@ cards.forEach(card => {
             audio = new Audio("dtmffiles/Dtmf"+card.dataset.num+".mp3");
             audio.play();
             if(selectedCards.length >= 2){
-                moves++;
-                setTimeout(function(){
+                timeout = setTimeout(function(){
+                    moves++;
                     moveCounter.innerHTML = "Moves: " + moves;
                     container.querySelectorAll(".selected").forEach(selectedCard => {
                         selectedCard.classList.remove("selected");
@@ -52,6 +53,10 @@ cards.forEach(card => {
     });
 });
 function resetGame(){
+    if(timeout){
+        clearTimeout(timeout);
+        timeout = null;
+    }
     cardNums = [0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9];
     cards.forEach(card => {
         let num = Math.floor(Math.random() * (cardNums.length - 1));
