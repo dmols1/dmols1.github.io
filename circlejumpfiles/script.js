@@ -35,6 +35,11 @@ function run() {
         drawSegment();
         segmentsDrawn++;
     }
+    for(let i = 0; i < platforms.length; i++){
+        while(platforms[i].posy < height-600){
+            platforms.splice(i, 1);
+        }
+    }
     tick++;
     if(mode == "angle"){
         angle = Math.asin(Math.sin(tick/35))+Math.PI/2;
@@ -150,3 +155,11 @@ function resetGame() {
 }
 
 canvas.addEventListener("click", launch);
+
+window.addEventListener("keydown", function(event){
+    if(event.code == "Space"){
+        launch();
+    } else if(event.code == "KeyR"){
+        resetGame();
+    }
+});
