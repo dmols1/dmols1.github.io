@@ -2,7 +2,7 @@ body {
     margin: 0px;
     overflow: hidden;
     text-align: center;
-    background-color: #111111;
+    background-image: linear-gradient(#222222, #111111);
 }
 
 #gameCanvas {
