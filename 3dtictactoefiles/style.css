@@ -79,7 +79,7 @@ body {
         max-width: 100vw;
     }
     .cell {
-        height: min(6vh, 12vw);
+        height: min(6vh, 15vw);
     }
     #viewportCanvas {
         height: auto;
