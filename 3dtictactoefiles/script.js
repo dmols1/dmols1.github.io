@@ -180,10 +180,12 @@ function draw(){
 function onMouseDown(event){
     drag = true;
     prevX = event.clientX;
+    event.preventDefault();
 }
 
 function onMouseUp(event){
     drag = false;
+    event.preventDefault();
 }
 
 function rotateCanvas(event){
@@ -191,4 +193,5 @@ function rotateCanvas(event){
         angle -= (event.clientX-prevX)/3;
         prevX = event.clientX;
     }
+    event.preventDefault();
 }
