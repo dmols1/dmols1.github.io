@@ -143,9 +143,9 @@ let fov = 600;
 let drag = false;
 let prevX = 0;
 
-canvas.addEventListener("mousedown", onMouseDown);
-canvas.addEventListener("mouseup", onMouseUp);
-canvas.addEventListener("mousemove", rotateCanvas);
+canvas.addEventListener("pointerdown", onMouseDown);
+canvas.addEventListener("pointerup", onMouseUp);
+canvas.addEventListener("pointermove", rotateCanvas);
 ctx.lineWidth = 2;
 draw();
 
