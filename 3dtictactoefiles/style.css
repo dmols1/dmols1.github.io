@@ -67,6 +67,7 @@ body {
 #viewportCanvas {
     height: min(100%, 50vw);
     aspect-ratio: 1 / 1;
+    touch-action: none;
 }
 
 @media (orientation: portrait) {
