@@ -31,7 +31,7 @@ body {
 }
 
 .layer div {
-    height: min(12vh, 6vw);
+    height: min(10vh, 6vw);
     aspect-ratio: 1 / 1;
     outline: 2px solid black;
     background-color: lightgrey;
@@ -67,7 +67,6 @@ body {
 #viewportCanvas {
     height: min(100%, 50vw);
     aspect-ratio: 1 / 1;
-    background-color: rgba(0, 0, 0, 0.2);
 }
 
 @media (orientation: portrait) {

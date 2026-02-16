@@ -102,3 +102,93 @@ function resetGame() {
     player = "X";
     turnLabel.innerHTML = "X's turn";
 }
+
+const canvas = document.getElementById("viewportCanvas");
+const ctx = canvas.getContext("2d");
+const vertices = [
+    {x: -3, y: -3, z: -3}, {x: -1, y: -3, z: -3}, {x: 1, y: -3, z: -3}, {x: 3, y: -3, z: -3},
+    {x: -3, y: -3, z: -1}, {x: -1, y: -3, z: -1}, {x: 1, y: -3, z: -1}, {x: 3, y: -3, z: -1},
+    {x: -3, y: -3, z: 1}, {x: -1, y: -3, z: 1}, {x: 1, y: -3, z: 1}, {x: 3, y: -3, z: 1},
+    {x: -3, y: -3, z: 3}, {x: -1, y: -3, z: 3}, {x: 1, y: -3, z: 3}, {x: 3, y: -3, z: 3},
+    {x: -3, y: -1, z: -3}, {x: -1, y: -1, z: -3}, {x: 1, y: -1, z: -3}, {x: 3, y: -1, z: -3},
+    {x: -3, y: -1, z: -1}, {x: -1, y: -1, z: -1}, {x: 1, y: -1, z: -1}, {x: 3, y: -1, z: -1},
+    {x: -3, y: -1, z: 1}, {x: -1, y: -1, z: 1}, {x: 1, y: -1, z: 1}, {x: 3, y: -1, z: 1},
+    {x: -3, y: -1, z: 3}, {x: -1, y: -1, z: 3}, {x: 1, y: -1, z: 3}, {x: 3, y: -1, z: 3},
+    {x: -3, y: 1, z: -3}, {x: -1, y: 1, z: -3}, {x: 1, y: 1, z: -3}, {x: 3, y: 1, z: -3},
+    {x: -3, y: 1, z: -1}, {x: -1, y: 1, z: -1}, {x: 1, y: 1, z: -1}, {x: 3, y: 1, z: -1},
+    {x: -3, y: 1, z: 1}, {x: -1, y: 1, z: 1}, {x: 1, y: 1, z: 1}, {x: 3, y: 1, z: 1},
+    {x: -3, y: 1, z: 3}, {x: -1, y: 1, z: 3}, {x: 1, y: 1, z: 3}, {x: 3, y: 1, z: 3},
+    {x: -3, y: 3, z: -3}, {x: -1, y: 3, z: -3}, {x: 1, y: 3, z: -3}, {x: 3, y: 3, z: -3},
+    {x: -3, y: 3, z: -1}, {x: -1, y: 3, z: -1}, {x: 1, y: 3, z: -1}, {x: 3, y: 3, z: -1},
+    {x: -3, y: 3, z: 1}, {x: -1, y: 3, z: 1}, {x: 1, y: 3, z: 1}, {x: 3, y: 3, z: 1},
+    {x: -3, y: 3, z: 3}, {x: -1, y: 3, z: 3}, {x: 1, y: 3, z: 3}, {x: 3, y: 3, z: 3},
+];
+const edges = [
+    [0,3], [4,7], [8,11], [12,15],
+    [0,12], [1,13], [2,14], [3,15],
+    [16,19], [20,23], [24,27], [28,31],
+    [16,28], [17,29], [18,30], [19,31],
+    [32,35], [36,39], [40,43], [44,47],
+    [32,44], [33,45], [34,46], [35,47],
+    [48,51], [52,55], [56,59], [60,63],
+    [48,60], [49,61], [50,62], [51,63],
+    [0,48], [1,49], [2,50], [3,51],
+    [4,52], [5,53], [6,54], [7,55],
+    [8,56], [9,57], [10,58], [11,59],
+    [12,60], [13,61], [14,62], [15,63]
+];
+let angle = 0;
+let scale = 40;
+let fov = 600;
+let drag = false;
+let prevX = 0;
+
+canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mouseup", onMouseUp);
+canvas.addEventListener("mousemove", rotateCanvas);
+ctx.lineWidth = 2;
+draw();
+
+function draw(){
+    if(!drag){
+        angle += 0.1;
+    }
+    ctx.clearRect(0, 0, 500, 500);
+    let matrix = new DOMMatrix();
+    matrix = matrix.translateSelf(0, 0, 500);
+    matrix = matrix.rotateSelf(10,0,0);
+    matrix = matrix.rotateAxisAngleSelf(0, 1, 0, angle);
+    matrix = matrix.scaleSelf(scale, scale, scale);
+    let projection = vertices.map(v => {
+        let tPoint = matrix.transformPoint(new DOMPoint(v.x, v.y, v.z));
+        tPoint.x = (tPoint.x/tPoint.z)*fov;
+        tPoint.y = (tPoint.y/tPoint.z)*fov;
+        return{
+            x: tPoint.x+250,
+            y: tPoint.y+230
+        };
+    });
+    ctx.beginPath();
+    edges.forEach(([p1,p2]) => {
+        ctx.moveTo(projection[p1].x, projection[p1].y);
+        ctx.lineTo(projection[p2].x, projection[p2].y);
+    });
+    ctx.stroke();
+    requestAnimationFrame(draw);
+}
+
+function onMouseDown(event){
+    drag = true;
+    prevX = event.clientX;
+}
+
+function onMouseUp(event){
+    drag = false;
+}
+
+function rotateCanvas(event){
+    if(drag){
+        angle -= (event.clientX-prevX)/3;
+        prevX = event.clientX;
+    }
+}
