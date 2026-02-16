@@ -6,15 +6,15 @@ body {
 }
 
 #main {
-    width: 100vw;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     display: flex;
 }
 
 .container {
     flex: 1;
-    max-height: 100vh;
-    max-width: 50vw;
+    max-height: 100dvh;
+    max-width: 50dvw;
     align-content: center;
 }
 
@@ -31,7 +31,7 @@ body {
 }
 
 .layer div {
-    height: min(10vh, 6vw);
+    height: min(10dvh, 6dvw);
     aspect-ratio: 1 / 1;
     outline: 2px solid black;
     background-color: lightgrey;
@@ -43,7 +43,7 @@ body {
     top: 0;
     right: 0;
     margin: 5px;
-    height: 10vh;
+    height: 10dvh;
     aspect-ratio: 1 / 1;
     background-image: url(reset.png);
     background-size: 100% 100%;
@@ -65,7 +65,7 @@ body {
 }
 
 #viewportCanvas {
-    height: min(100%, 50vw);
+    height: min(100%, 50dvw);
     aspect-ratio: 1 / 1;
     touch-action: none;
 }
@@ -75,14 +75,14 @@ body {
         flex-direction: column;
     }
     .container {
-        max-height: 50vh;
-        max-width: 100vw;
+        max-height: 50dvh;
+        max-width: 100dvw;
     }
     .layer div {
-        height: min(6vh, 9vw);
+        height: min(6dvh, 9dvw);
     }
     #viewportCanvas {
         height: auto;
-        width: min(100%, 50vh);
+        width: min(100%, 50dvh);
     }
 }
