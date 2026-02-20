@@ -49,12 +49,14 @@ layers.forEach((layer, i) => {
     });
 });
 
+let cells = document.querySelectorAll(".layer div");
 resetButton.addEventListener("click", resetGame);
 
 function onClick() {
     if(gameActive && marks[this.dataset.layer][this.dataset.index] == ""){
         this.style.backgroundImage = "url(3dtictactoefiles/"+player+".png)";
         marks[this.dataset.layer][this.dataset.index] = player;
+        this.dataset.mark = player;
         for(let i = 0; i < layerWinConditions.length; i++){
             let layerWinCondition = layerWinConditions[i];
             for(let j = 0; j < winConditions.length; j++){
@@ -94,10 +96,10 @@ function resetGame() {
         ["","","","","","","","",""],
         ["","","","","","","","",""]
     ];
-    let cells = document.querySelectorAll(".layer div");
     cells.forEach(cell => {
         cell.style.backgroundImage = "";
         cell.style.backgroundColor = "lightgrey";
+        delete cell.dataset.mark;
     });
     player = "X";
     turnLabel.innerHTML = "X's turn";
@@ -137,6 +139,8 @@ const edges = [
     [8,56], [9,57], [10,58], [11,59],
     [12,60], [13,61], [14,62], [15,63]
 ];
+let viewportMarks = [];
+var objectsToDraw = [];
 let angle = 0;
 let scale = 40;
 let fov = 600;
@@ -146,14 +150,16 @@ let prevX = 0;
 canvas.addEventListener("pointerdown", onMouseDown);
 canvas.addEventListener("pointerup", onMouseUp);
 canvas.addEventListener("pointermove", rotateCanvas);
+canvas.addEventListener("pointerleave", onMouseUp);
 ctx.lineWidth = 2;
-draw();
+setInterval(draw, 1000/60);
 
 function draw(){
     if(!drag){
         angle += 0.1;
     }
-    ctx.clearRect(0, 0, 500, 500);
+    viewportMarks = [];
+    objectsToDraw = [];
     let matrix = new DOMMatrix();
     matrix = matrix.translateSelf(0, 0, 500);
     matrix = matrix.rotateSelf(10,0,0);
@@ -165,16 +171,83 @@ function draw(){
         tPoint.y = (tPoint.y/tPoint.z)*fov;
         return{
             x: tPoint.x+250,
-            y: tPoint.y+230
+            y: tPoint.y+225,
+            zIndex: tPoint.z
         };
     });
-    ctx.beginPath();
-    edges.forEach(([p1,p2]) => {
-        ctx.moveTo(projection[p1].x, projection[p1].y);
-        ctx.lineTo(projection[p2].x, projection[p2].y);
+    cells.forEach(cell => {
+        let x, y, z;
+        if(cell.dataset.mark){
+            switch(cell.dataset.layer){
+                case "0": y = -2; break;
+                case "1": y = 0; break;
+                case "2": y = 2;
+            }
+            switch(cell.dataset.index){
+                case "0": x = -2; z = 2; break;
+                case "1": x = 0; z = 2; break;
+                case "2": x = 2; z = 2; break;
+                case "3": x = -2; z = 0; break;
+                case "4": x = 0; z = 0; break;
+                case "5": x = 2; z = 0; break;
+                case "6": x = -2; z = -2; break;
+                case "7": x = 0; z = -2; break;
+                case "8": x = 2; z = -2;
+            }
+            let entry = viewportMarks.length;
+            viewportMarks[entry] = {};
+            viewportMarks[entry].x = x;
+            viewportMarks[entry].y = y;
+            viewportMarks[entry].z = z;
+            viewportMarks[entry].mark = cell.dataset.mark;
+        }
     });
-    ctx.stroke();
-    requestAnimationFrame(draw);
+    let projectedMarks = viewportMarks.map(m => {
+        let tPoint = matrix.transformPoint(new DOMPoint(m.x, m.y, m.z));
+        tPoint.x = (tPoint.x/tPoint.z)*fov;
+        tPoint.y = (tPoint.y/tPoint.z)*fov;
+        return{
+            x: tPoint.x+250,
+            y: tPoint.y+225,
+            zIndex: tPoint.z,
+            size: 500/tPoint.z,
+            mark: m.mark
+        };
+    });
+    edges.forEach(([p1,p2]) => {
+        let entry = objectsToDraw.length;
+        objectsToDraw[entry] = {};
+        objectsToDraw[entry].type = "edge";
+        objectsToDraw[entry].zIndex = Math.max(projection[p1].zIndex, projection[p2].zIndex);
+        objectsToDraw[entry].x1 = projection[p1].x;
+        objectsToDraw[entry].x2 = projection[p2].x;
+        objectsToDraw[entry].y1 = projection[p1].y;
+        objectsToDraw[entry].y2 = projection[p2].y;
+    });
+    projectedMarks.forEach(mark => {
+        let entry = objectsToDraw.length;
+        objectsToDraw[entry] = {};
+        objectsToDraw[entry].type = "mark";
+        objectsToDraw[entry].zIndex = mark.zIndex;
+        objectsToDraw[entry].x = mark.x-50*mark.size;
+        objectsToDraw[entry].y = mark.y-50*mark.size;
+        objectsToDraw[entry].size = 100*mark.size;
+        objectsToDraw[entry].mark = mark.mark;
+    });
+    objectsToDraw.sort((a, b) => {return b.zIndex - a.zIndex});
+    ctx.clearRect(0, 0, 500, 500);
+    objectsToDraw.forEach(obj => {
+        if(obj.type == "edge"){
+            ctx.beginPath();
+            ctx.moveTo(obj.x1, obj.y1);
+            ctx.lineTo(obj.x2, obj.y2);
+            ctx.stroke();
+        }else if(obj.type == "mark"){
+            let img = new Image();
+            img.src = "3dtictactoefiles/"+obj.mark+".png";
+            ctx.drawImage(img, obj.x, obj.y, obj.size, obj.size);
+        }
+    });
 }
 
 function onMouseDown(event){
