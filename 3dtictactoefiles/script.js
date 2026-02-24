@@ -229,9 +229,9 @@ function draw(){
         objectsToDraw[entry] = {};
         objectsToDraw[entry].type = "mark";
         objectsToDraw[entry].zIndex = mark.zIndex;
-        objectsToDraw[entry].x = mark.x-50*mark.size;
-        objectsToDraw[entry].y = mark.y-50*mark.size;
-        objectsToDraw[entry].size = 100*mark.size;
+        objectsToDraw[entry].x = mark.x-scale*mark.size;
+        objectsToDraw[entry].y = mark.y-scale*mark.size;
+        objectsToDraw[entry].size = 2*scale*mark.size;
         objectsToDraw[entry].mark = mark.mark;
     });
     objectsToDraw.sort((a, b) => {return b.zIndex - a.zIndex});
