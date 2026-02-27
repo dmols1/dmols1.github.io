@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    text-align: center;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    padding: 20px;
+    width: 100dvw;
+    background-color: black;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: inherit;
+}
+
+.gameLinks {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin: 35px;
+    margin-bottom: 250px;
+    gap: 25px;
+}
+
+.gameLinks div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: min(10vh, 5vw);
+    overflow: hidden;
+    aspect-ratio: 5 / 2;
+}
+
+#header {
+    font-size: 70px;
+    font-weight: bold;
+}
+
+#socialLink {
+    font-size: 50px;
+    animation: flash 2.5s step-end infinite;
+}
+
+@keyframes flash {
+    0% {color:yellow;}
+    50% {color:skyblue;}
+}
