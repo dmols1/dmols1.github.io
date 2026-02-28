@@ -39,10 +39,6 @@ a:link, a:visited, a:hover, a:active {
     aspect-ratio: 5 / 2;
 }
 
-.gameLinks div:hover {
-    animation: flash 0.25s step-end infinite;
-}
-
 #header {
     font-size: min(70px, 12dvw);
     font-weight: bold;
@@ -57,4 +53,10 @@ a:link, a:visited, a:hover, a:active {
 @keyframes flash {
     0% {color:yellow;}
     50% {color:skyblue;}
+}
+
+@media (hover: hover){
+    .gameLinks div:hover {
+        animation: flash 0.25s step-end infinite;
+    }
 }
