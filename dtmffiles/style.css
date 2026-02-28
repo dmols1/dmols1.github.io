@@ -22,8 +22,10 @@ body {
     aspect-ratio: 2 / 3;
 }
 
-#gameContainer div:hover {
-    background-color: palegreen;
+@media (hover: hover){
+    #gameContainer div:hover {
+        background-color: palegreen;
+    }
 }
 
 #gameContainer div.selected {
