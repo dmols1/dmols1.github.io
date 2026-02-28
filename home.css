@@ -19,6 +19,7 @@ footer {
 
 a:link, a:visited, a:hover, a:active {
     color: inherit;
+    text-decoration: none;
 }
 
 .gameLinks {
@@ -38,6 +39,10 @@ a:link, a:visited, a:hover, a:active {
     aspect-ratio: 5 / 2;
 }
 
+.gameLinks div:hover {
+    animation: flash 0.25s step-end infinite;
+}
+
 #header {
     font-size: min(70px, 12dvw);
     font-weight: bold;
@@ -45,6 +50,7 @@ a:link, a:visited, a:hover, a:active {
 
 #socialLink {
     font-size: min(50px, 8dvw);
+    text-decoration: underline;
     animation: flash 2.5s step-end infinite;
 }
 
