@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+    text-align: center;
+    background-color: black;
+    overflow: hidden;
+}
+
+canvas {
+    background-color: darkgrey;
+    height: min(100dvh, 200dvw);
+    aspect-ratio: 1 / 2;
+}
