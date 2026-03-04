@@ -99,7 +99,10 @@ function mouseMove(event){
     event.preventDefault();
 }
 
-canvas.addEventListener("pointerdown", mouseDown);
-canvas.addEventListener("pointerup", mouseUp);
-canvas.addEventListener("pointermove", mouseMove);
+canvas.addEventListener("mousedown", mouseDown);
+canvas.addEventListener("mouserup", mouseUp);
+canvas.addEventListener("mousemove", mouseMove);
 canvas.addEventListener("mouseleave", mouseUp);
+canvas.addEventListener("touchstart", mouseDown);
+canvas.addEventListener("touchend", mouseUp);
+canvas.addEventListener("touchmove", mouseMove);
