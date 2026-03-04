@@ -71,8 +71,8 @@ function mousePos(c, e){
     };
 }
 
-function mouseDown(e){
-    mouse = mousePos(canvas, e);
+function mouseDown(event){
+    mouse = mousePos(canvas, event);
     Ball.allInstances.forEach(ball => {
         if(mouse.x >= ball.positionX - ball.scale/2 && mouse.x <= ball.positionX + ball.scale/2 &&
         mouse.y >= ball.positionY - ball.scale/2 && mouse.y <= ball.positionY + ball.scale/2){
@@ -82,18 +82,21 @@ function mouseDown(e){
             ball.dragOffsetY = ball.positionY - mouse.y;
         }
     });
+    event.preventDefault();
 }
 
-function mouseUp(){
+function mouseUp(event){
     Ball.allInstances.forEach(ball => {
         if(ball.isDragging){
             ball.isDragging = false;
         }
     });
+    event.preventDefault();
 }
 
-function mouseMove(e){
-    mouse = mousePos(canvas, e);
+function mouseMove(event){
+    mouse = mousePos(canvas, event);
+    event.preventDefault();
 }
 
 canvas.addEventListener("pointerdown", mouseDown);
