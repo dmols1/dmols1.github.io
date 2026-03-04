@@ -102,3 +102,4 @@ function mouseMove(event){
 canvas.addEventListener("pointerdown", mouseDown);
 canvas.addEventListener("pointerup", mouseUp);
 canvas.addEventListener("pointermove", mouseMove);
+canvas.addEventListener("pointerleave", mouseUp);

@@ -9,4 +9,5 @@ canvas {
     background-color: darkgrey;
     height: min(100dvh, 200dvw);
     aspect-ratio: 1 / 2;
+    touch-action: none;
 }
