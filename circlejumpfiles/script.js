@@ -71,6 +71,8 @@ function run() {
 
 function draw() {
     ctx.clearRect(0, 0, 400, 600);
+    ctx.fillStyle = "#333333";
+    ctx.fillRect(0, 0, 400, 600);
     ctx.fillStyle = "#000000";
     ctx.fillRect(0, 0, 20, 600);
     ctx.fillRect(380, 0, 20, 600);
