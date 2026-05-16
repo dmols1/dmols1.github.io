@@ -140,7 +140,7 @@ const edges = [
     [12,60], [13,61], [14,62], [15,63]
 ];
 let viewportMarks = [];
-var objectsToDraw = [];
+let objectsToDraw = [];
 let angle = 0;
 let scale = 40;
 let fov = 600;
